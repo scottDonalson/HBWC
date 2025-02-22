@@ -1,11 +1,15 @@
-# Use Java 21 instead of default (older) versions
-FROM openjdk:21-jdk-slim
-
-# Set working directory inside the container
+# Use Maven to build the application
+FROM maven:3.8.5-openjdk-21 AS builder
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy the built JAR file
-COPY target/*.jar app.jar
+# Use a lightweight JDK image to run the app
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
+CMD ["java", "-jar", "app.jar"]
+
 
 # Expose port 8080
 EXPOSE 8080

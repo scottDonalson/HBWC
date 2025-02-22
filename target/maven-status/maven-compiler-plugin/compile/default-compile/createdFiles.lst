@@ -1,0 +1,6 @@
+rocks\hbwc\backend\config\CorsConfig.class
+rocks\hbwc\backend\models\Wrestler.class
+rocks\hbwc\backend\HbwcBackendApplication.class
+rocks\hbwc\backend\config\CorsConfig$1.class
+rocks\hbwc\backend\controllers\WrestlerController.class
+rocks\hbwc\backend\repos\WrestlerRepository.class
