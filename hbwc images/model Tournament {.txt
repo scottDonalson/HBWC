@@ -1,0 +1,7 @@
+model Tournament {
+  id          String  @id @default(uuid())
+  name        String
+  date        DateTime
+  location    String
+  createdAt   DateTime @default(now())
+}

@@ -1,0 +1,33 @@
+services:
+  frontend:
+    image: ksdonalson2/hbwc-frontend:latest
+    ports:
+      - "80:3000"
+    depends_on:
+      - backend
+
+  backend:
+    image: ksdonalson2/hbwc-backend:latest
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/wrestlers_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=t$#RZDfitbe4R!
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  db:
+    image: ksdonalson2/hbwc-postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_DB=wrestlers_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=t$#RZDfitbe4R!
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
