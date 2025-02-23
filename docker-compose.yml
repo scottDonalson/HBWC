@@ -1,0 +1,47 @@
+services:
+  frontend:
+    build: ./frontend
+    image: hbwc-frontend
+    container_name: frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    networks:
+      - hbwc_network
+
+  db:
+    image: postgres
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: wrestlers_db
+      POSTGRES_PASSWORD: t$#RZDfitbe4R!
+    ports:
+      - "5432:5432"  # Map container's port 5432 to host's port 5432
+    networks:
+      - hbwc_network
+
+  backend:
+    build: ./backend
+    image: hbwc-backend
+    container_name: backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/wrestlers_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: t$#RZDfitbe4R!
+    ports:
+      - "8080:8080"
+    networks:
+      - hbwc_network
+
+
+
+networks:
+  hbwc_network:
+    driver: bridge
